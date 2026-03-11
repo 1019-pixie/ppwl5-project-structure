@@ -3,16 +3,12 @@ import { UserModel } from "../models/user.model";
 import type { User } from "../types/user.type";
 
 export const userService = {
-
-  getAll(): UserModel[] {
-    return userRepository.findAll();
+  getAll() {
+    return userRepository.findAll().map(u => new UserModel(u));
   },
 
   create(user: User) {
-    if (!user.name || !user.role) {
-      throw new Error("Name and role required");
-    }
-
+    if (!user.name || !user.role) throw new Error("Name and role required");
     userRepository.create(user);
   },
 
